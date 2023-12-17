@@ -10,24 +10,28 @@ import (
 )
 
 func serveHttpRequest(request *http.Request) *httptest.ResponseRecorder {
+	city := "moscow"
+	totalCount := 4
+	url := fmt.Sprintf("/cafe?city=%s&count=%d", city, totalCount)
+	req := httptest.NewRequest("GET", url, nil)
+
 	responseRecorder := httptest.NewRecorder()
 	handler := http.HandlerFunc(mainHandle)
-	handler.ServeHTTP(responseRecorder, request)
+	handler.ServeHTTP(responseRecorder, req)
 	return responseRecorder
 }
 
+func TestMainHandlerWhenRequestCorrect(t *testing.T) {
+	want := http.StatusOK
+	have :=
+
+		assert.Equal(t, want, responseRecorder.Code)
+}
+
+func TestMainHandlerWhenCityCorrect(t *testing.T) {
+
+}
+
 func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
-	count := 4
-	city := "moscow"
-	url := fmt.Sprintf("/cafe?count=%d&city=%s", count, city)
-	req := httptest.NewRequest("GET", url, nil)
-
-	expected := "Мир кофе,Сладкоежка,Кофе и завтраки,Сытый студент"
-
-	responseRecorder := serveHttpRequest(req)
-	actual := string(responseRecorder.Body.Bytes()[:])
-
-	assert.Equal(t, http.StatusOK, responseRecorder.Code)
-	assert.Equal(t, expected, actual)
 
 }
